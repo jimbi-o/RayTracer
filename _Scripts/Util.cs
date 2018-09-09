@@ -7,4 +7,10 @@ public static class Util {
 		var r = random_.NextDouble();
 		return (float)r;
 	}
+	public static Vector3 RandomInUnitSphere() {
+		while (true) {
+			Vector3 v = new Vector3(UnitRandFloat(), UnitRandFloat(), UnitRandFloat());
+			if (v.sqrMagnitude < 1.0f) return v;
+		}
+	}
 }

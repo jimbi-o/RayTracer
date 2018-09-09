@@ -10,9 +10,9 @@ public class Scene {
 	}
 	public Color GetColor(Ray ray, HitRecord hit) {
 		foreach (var hitable in hitables_) {
-			if (hitable.Hit(ray, 0.0f, float.MaxValue, hit)) {
-				Vector3 val = 0.5f * (hit.normal + Vector3.one);
-				return new Color(val.x, val.y, val.z, 1.0f);
+			if (hitable.Hit(ray, 0.0001f, float.MaxValue, hit)) {
+				Vector3 target = hit.p + hit.normal + Util.RandomInUnitSphere();
+				return 0.5f * GetColor(new Ray(hit.p, target - hit.p), hit);
 			}
 		}
 		return GetBGColor(ray);

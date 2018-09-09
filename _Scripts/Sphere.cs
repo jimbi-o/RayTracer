@@ -31,10 +31,10 @@ public class Sphere : Hitable {
 			ret = true;
 			hit.t = t;
 		}
-		t = (-b + discriminant) / a;
-		if (tMin < t && t < tMax) {
+		float t2 = (-b + discriminant) / a;
+		if (t2 < t && tMin < t2 && t2 < tMax) {
 			ret = true;
-			hit.t = t;
+			hit.t = t2;
 		}
 		if (!ret) return false;
 		hit.p = ray.PointAtParameter(hit.t);

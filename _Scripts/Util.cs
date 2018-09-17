@@ -18,10 +18,14 @@ public static class Util {
 		return new Color(v.x, v.y, v.z, 1.0f);
 	}
 	public static Vector3 GetRefractedRay(Vector3 direction, Vector3 normal, float n) {
-		direction.Normalize();
 		var dt = Vector3.Dot(direction, normal);
 		var discriminant = 1.0f - n * n * (1.0f - dt * dt);
 		if (discriminant <= 0.0f) return Vector3.zero;
 		return n * (direction - normal * dt) - normal * Mathf.Sqrt(discriminant);
+	}
+	public static float GetSchlick(float cosine, float reflectionIndex) {
+		float r0 = (1.0f - reflectionIndex) / (1.0f + reflectionIndex);
+		r0 = r0 * r0;
+		return r0 + (1.0f - r0) * Mathf.Pow(1.0f - cosine, 5.0f);
 	}
 }

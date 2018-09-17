@@ -17,14 +17,19 @@ public class Dielectric : MaterialData {
 	}
 	public Vector3 GetScatteredRay(Ray ray, HitRecord hit) {
 		Vector3 scattered = Vector3.zero;
+		float cosineR = ReflectionIndex;
 		if (Vector3.Dot(ray.Direction, hit.normal) > 0.0f) {
 			scattered = Util.GetRefractedRay(ray.Direction, -hit.normal, ReflectionIndex);
 		} else {
 			scattered = Util.GetRefractedRay(ray.Direction, hit.normal, 1.0f / ReflectionIndex);
+			cosineR =-1.0f;
 		}
-		if (scattered == Vector3.zero) {
-			return Vector3.Reflect(ray.Direction, hit.normal);
+		if (scattered != Vector3.zero) {
+			float schlick = Util.GetSchlick(cosineR * Vector3.Dot(ray.Direction, hit.normal), ReflectionIndex);
+			if (schlick <= Util.UnitRandFloat()) {
+				return scattered;
+			}
 		}
-		return scattered;
+		return Vector3.Reflect(ray.Direction, hit.normal);
 	}
 }

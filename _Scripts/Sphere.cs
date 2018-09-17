@@ -10,11 +10,17 @@ public class Sphere : Hitable {
 		get { return radius_; }
 		set { radius_ =  value; }
 	}
+	public MaterialData Material {
+		get { return material_; }
+		set { material_ = value; }
+	}
 	private Vector3 center_;
 	private float radius_;
-	public Sphere(Vector3 center, float r) {
+	private MaterialData material_;
+	public Sphere(Vector3 center, float r, MaterialData material) {
 		Center = center;
 		Radius = r;
+		Material = material;
 	}
 	public override void Hit(Ray ray, HitRecord hit) {
 		Vector3 oc = ray.Origin - Center;
@@ -38,5 +44,6 @@ public class Sphere : Hitable {
 		hit.t = t;
 		hit.p = ray.PointAtParameter(hit.t);
 		hit.normal = (hit.p - Center) / Radius;
+		hit.material = Material;
 	}
 }

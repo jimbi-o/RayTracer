@@ -13,7 +13,11 @@ public class RayTracingEngine {
 		aaQuality_ = quality;
 		width_ = width;
 		height_ = height;
-		cameraRay_ = new CameraRay(width_, height_);
+		cameraRay_ = new CameraRay(new Vector3(-2.0f, 2.0f, 1.0f),
+								   new Vector3(0.0f, 0.0f, -1.0f),
+								   new Vector3(0.0f, 1.0f, 0.0f),
+								   45.0f,
+								   (float)width_ / (float)height_);
 		pixel_ = new Color[width_, height_];
 	}
 	public void Update(Scene scene) {

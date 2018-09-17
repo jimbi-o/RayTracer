@@ -17,4 +17,11 @@ public static class Util {
 	public static Color ConvertToColor(Vector3 v) {
 		return new Color(v.x, v.y, v.z, 1.0f);
 	}
+	public static Vector3 GetRefractedRay(Vector3 direction, Vector3 normal, float n) {
+		direction.Normalize();
+		var dt = Vector3.Dot(direction, normal);
+		var discriminant = 1.0f - n * n * (1.0f - dt * dt);
+		if (discriminant <= 0.0f) return Vector3.zero;
+		return n * (direction - normal * dt) - normal * Mathf.Sqrt(discriminant);
+	}
 }

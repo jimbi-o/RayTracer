@@ -7,10 +7,10 @@ public class Scene {
 	private int maxDepth_;
 	public Scene(int maxDepth) {
 		hitables_ = new Hitable[4];
-		hitables_[0] = new Sphere(new Vector3(0.0f, 0.0f, -1.0f), 0.5f, new Lambertian(new Vector3(0.8f, 0.3f, 0.3f)));
+		hitables_[0] = new Sphere(new Vector3(0.0f, 0.0f, -1.0f), 0.5f, new Lambertian(new Vector3(0.1f, 0.2f, 0.5f)));
 		hitables_[1] = new Sphere(new Vector3(0.0f, -100.5f, -1.0f), 100.0f, new Lambertian(new Vector3(0.8f, 0.8f, 0.0f)));
 		hitables_[2] = new Sphere(new Vector3(1.0f, 0.0f, -1.0f), 0.5f, new Metal(new Vector3(0.8f, 0.6f, 0.2f), 0.3f));
-		hitables_[3] = new Sphere(new Vector3(-1.0f, 0.0f, -1.0f), 0.5f, new Metal(new Vector3(0.8f, 0.8f, 0.8f), 1.0f));
+		hitables_[3] = new Sphere(new Vector3(-1.0f, 0.0f, -1.0f), 0.5f, new Dielectric(1.5f));
 		skyColor_ = new Vector3(0.5f, 0.7f, 1.0f);
 		maxDepth_ = maxDepth;
 	}

@@ -4,22 +4,20 @@ using UnityEngine;
 public class Scene {
 	private Hitable[] hitables_;
 	private Vector3 skyColor_;
-	public Scene() {
+	private int maxDepth_;
+	public Scene(int maxDepth) {
 		var lambertian = new Lambertian(new Vector3(0.5f, 0.5f, 0.5f));
 		hitables_ = new Hitable[2];
 		hitables_[0] = new Sphere(new Vector3(0.0f, 0.0f, -1.0f), 0.5f, lambertian);
 		hitables_[1] = new Sphere(new Vector3(0.0f, -100.5f, -1.0f), 100.0f, lambertian);
 		skyColor_ = new Vector3(0.5f, 0.7f, 1.0f);
+		maxDepth_ = maxDepth;
 	}
-	public Color GetColor(Ray ray) {
-		var v = GetColorVector(ray);
-		return new Color(v.x, v.y, v.z, 1.0f);
-	}
-	public Vector3 GetColorVector(Ray ray) {
+	public Vector3 GetColor(Ray ray, int depth) {
 		var hit = GetHitRecord(ray);
 		if (!hit.IsHit()) return GetBGColor(ray);
-		if (!hit.material.Scatter(ray, hit)) return Vector3.zero;
-		hit.attenuation.Scale(GetColorVector(hit.scatteredRay));
+		if (depth >= maxDepth_ || !hit.material.Scatter(ray, hit)) return Vector3.zero;
+		hit.attenuation.Scale(GetColor(hit.scatteredRay, depth + 1));
 		return hit.attenuation;
 	}
 	public HitRecord GetHitRecord(Ray ray) {

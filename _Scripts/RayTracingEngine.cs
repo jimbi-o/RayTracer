@@ -23,7 +23,7 @@ public class RayTracingEngine {
 				for (int s = 0; s < aaQuality_; ++s) {
 					float u = ((float)x + Util.UnitRandFloat()) / (float)width_;
 					float v = ((float)y + Util.UnitRandFloat()) / (float)height_;
-					color += scene.GetColor(cameraRay_.GetRay(u, v));
+					color += Util.ConvertToColor(scene.GetColor(cameraRay_.GetRay(u, v), 0));
 				}
 				pixel_[x, y] = color / aaQuality_;
 			}

@@ -4,6 +4,7 @@ using UnityEngine;
 public class RayTracer : MonoBehaviour {
 	public int quality = 256;
 	public int rate = 8;
+	public int maxDepth = 50;
 	private int width_, height_;
 	private Texture2D tex_;
 	private Material material_;
@@ -14,7 +15,7 @@ public class RayTracer : MonoBehaviour {
 		height_ = Screen.height / rate;
 		material_ = new Material(Shader.Find("Hidden/RayTracer"));
 		tex_ = new Texture2D(width_, height_, TextureFormat.ARGB32, false, true);
-		scene_ = new Scene();
+		scene_ = new Scene(maxDepth);
 		rayTracingEngine_ = new RayTracingEngine(quality, width_, height_);
 		rayTracingEngine_.Update(scene_);
 	}

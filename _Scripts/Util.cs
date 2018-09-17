@@ -14,4 +14,7 @@ public static class Util {
 			if (v.sqrMagnitude < 1.0f) return v;
 		}
 	}
+	public static Color ConvertToColor(Vector3 v) {
+		return new Color(v.x, v.y, v.z, 1.0f);
+	}
 }

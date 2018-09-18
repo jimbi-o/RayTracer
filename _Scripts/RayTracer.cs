@@ -17,6 +17,8 @@ public class RayTracer : MonoBehaviour {
 		tex_ = new Texture2D(width_, height_, TextureFormat.ARGB32, false, true);
 		scene_ = new Scene(maxDepth);
 		rayTracingEngine_ = new RayTracingEngine(quality, width_, height_);
+	}
+	void Update() {
 		rayTracingEngine_.Update(scene_);
 	}
 	void OnRenderImage (RenderTexture source, RenderTexture destination)

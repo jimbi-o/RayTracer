@@ -19,7 +19,7 @@ public class RayTracingEngine {
 		cameraParam.lookFrom.Set(13.0f, 2.0f, 3.0f);
 		cameraParam.lookAt.Set(0.0f, 0.0f, 0.0f);
 		cameraParam.aspect = (float)width_ / (float)height_;
-		cameraParam.fstop = 1.0f / 16.0f;
+		cameraParam.fstop = 4.0f;
 		cameraParam.focusDistance = 10.0f;
 		cameraParam.fov = 20.0f;
 		cameraRay_ = new CameraRay(cameraParam);

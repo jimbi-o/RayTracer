@@ -12,7 +12,7 @@ public class CameraParam {
 	public CameraParam() {
 		vup.Set(0.0f, 1.0f, 0.0f);
 		fov = 45.0f;
-		fstop = 1.0f / 4.0f;
+		fstop = 16.0f;
 	}
 }
 public class CameraRay {
@@ -21,7 +21,7 @@ public class CameraRay {
 	private Vector3 lowerLeftCorner_;
 	private float lensRadius_;
 	public CameraRay(CameraParam param) {
-		lensRadius_ = 0.0005f / param.fstop;
+		lensRadius_ = 0.5f / param.fstop;
 		var theta = param.fov * Mathf.PI / 180.0f;
 		var halfHeight = Mathf.Tan(theta / 2.0f);
 		var halfWidth = param.aspect * halfHeight;

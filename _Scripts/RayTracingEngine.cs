@@ -14,11 +14,11 @@ public class RayTracingEngine {
 		maxSampleNum_ = quality;
 		width_ = width;
 		height_ = height;
-		cameraRay_ = new CameraRay(new Vector3(-2.0f, 2.0f, 1.0f),
-								   new Vector3(0.0f, 0.0f, -1.0f),
-								   new Vector3(0.0f, 1.0f, 0.0f),
-								   45.0f,
-								   (float)width_ / (float)height_);
+		CameraParam cameraParam = new CameraParam();
+		cameraParam.lookFrom.Set(-2.0f, 2.0f, 1.0f);
+		cameraParam.lookAt.Set(0.0f, 0.0f, -1.0f);
+		cameraParam.aspect = (float)width_ / (float)height_;
+		cameraRay_ = new CameraRay(cameraParam);
 		pixel_ = new Color[width_, height_];
 		for (int y = height_ - 1; y >= 0; --y) {
 			for (int x = 0; x < width_; ++x) {

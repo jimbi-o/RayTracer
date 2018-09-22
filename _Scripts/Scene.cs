@@ -15,12 +15,21 @@ public class Scene {
 		skyColor_ = new Vector3(0.5f, 0.7f, 1.0f);
 		maxDepth_ = maxDepth;
 	}
-	public Vector3 GetColor(Ray ray, int depth) {
-		var hit = GetHitRecord(ray);
-		if (!hit.IsHit()) return GetBGColor(ray);
-		if (depth >= maxDepth_ || !hit.material.Scatter(ray, hit)) return Vector3.zero;
-		hit.attenuation.Scale(GetColor(hit.scatteredRay, depth + 1));
-		return hit.attenuation;
+	public Vector3 GetColor(Ray ray) {
+		var attenuation = Vector3.one;
+		for (int i = 0; i < maxDepth_; ++i) {
+			var hit = GetHitRecord(ray);
+			if (!hit.IsHit()) {
+				attenuation.Scale(GetBGColor(ray));
+				break;
+			}
+			if (!hit.material.Scatter(ray, hit)) {
+				return Vector3.zero;
+			}
+			attenuation.Scale(hit.attenuation);
+			ray = hit.scatteredRay;
+		}
+		return attenuation;
 	}
 	public HitRecord GetHitRecord(Ray ray) {
 		var hit = new HitRecord();

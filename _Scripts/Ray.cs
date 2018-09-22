@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 public class Ray {
+	public static Ray Clone(Ray r) {
+		var ray = new Ray(r.Origin, r.Direction);
+		return ray;
+	}
 	public Vector3 Origin {
 		get { return origin_; }
 		set { origin_ = value; }

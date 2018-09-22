@@ -34,7 +34,7 @@ public class RayTracingEngine {
 			for (int x = 0; x < width_; ++x) {
 				float u = ((float)x + Util.UnitRandFloat()) / (float)width_;
 				float v = ((float)y + Util.UnitRandFloat()) / (float)height_;
-				var color = Util.ConvertToColor(scene.GetColor(cameraRay_.GetRay(u, v), 0));
+				var color = Util.ConvertToColor(scene.GetColor(cameraRay_.GetRay(u, v)));
 				pixel_[x, y] = Color.Lerp(pixel_[x, y], color, alpha);
 			}
 		}

@@ -15,9 +15,12 @@ public class RayTracingEngine {
 		width_ = width;
 		height_ = height;
 		CameraParam cameraParam = new CameraParam();
-		cameraParam.lookFrom.Set(-2.0f, 2.0f, 1.0f);
-		cameraParam.lookAt.Set(0.0f, 0.0f, -1.0f);
+		cameraParam.lookFrom.Set(13.0f, 2.0f, 3.0f);
+		cameraParam.lookAt.Set(0.0f, 0.0f, 0.0f);
 		cameraParam.aspect = (float)width_ / (float)height_;
+		cameraParam.fstop = 1.0f / 16.0f;
+		cameraParam.focusDistance = 10.0f;
+		cameraParam.fov = 20.0f;
 		cameraRay_ = new CameraRay(cameraParam);
 		pixel_ = new Color[width_, height_];
 		for (int y = height_ - 1; y >= 0; --y) {

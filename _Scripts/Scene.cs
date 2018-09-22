@@ -6,14 +6,41 @@ public class Scene {
 	private Vector3 skyColor_;
 	private int maxDepth_;
 	public Scene(int maxDepth) {
-		hitables_ = new Hitable[5];
-		hitables_[0] = new Sphere(new Vector3(0.0f, 0.0f, -1.0f), 0.5f, new Lambertian(new Vector3(0.1f, 0.2f, 0.5f)));
-		hitables_[1] = new Sphere(new Vector3(0.0f, -100.5f, -1.0f), 100.0f, new Lambertian(new Vector3(0.8f, 0.8f, 0.0f)));
-		hitables_[2] = new Sphere(new Vector3(1.0f, 0.0f, -1.0f), 0.5f, new Metal(new Vector3(0.8f, 0.6f, 0.2f), 0.3f));
-		hitables_[3] = new Sphere(new Vector3(-1.0f, 0.0f, -1.0f), 0.5f, new Dielectric(1.5f));
-		hitables_[4] = new Sphere(new Vector3(-1.0f, 0.0f, -1.0f), -0.45f, new Dielectric(1.5f));
-		skyColor_ = new Vector3(0.5f, 0.7f, 1.0f);
 		maxDepth_ = maxDepth;
+		skyColor_ = new Vector3(0.5f, 0.7f, 1.0f);
+		var center = new Vector3(4.0f, 2.0f, 0.0f);
+		var position = new Vector3(0.0f, -1000.0f, 0.0f);
+		var hitables = new List<Hitable>(500);
+		hitables.Add(new Sphere(position, -position.y, new Lambertian(0.5f * Vector3.one)));
+		float radius = 0.2f;
+		var dielectric = new Dielectric(1.5f);
+		for (int a = -11; a < 11; ++a) {
+			for (int b = -11; b < 11; ++b) {
+				position.Set(a + 0.9f * Util.UnitRandFloat(), radius, b + 0.9f * Util.UnitRandFloat());
+				if ((position - center).sqrMagnitude <= 0.81) continue;
+				var chooseMat = Util.UnitRandFloat();
+				if (chooseMat < 0.8f) {
+					hitables.Add(new Sphere(position, radius, new Lambertian(new Vector3(Util.UnitRandFloat(), Util.UnitRandFloat(), Util.UnitRandFloat()))));
+					continue;
+				}
+				if (chooseMat < 0.95f) {
+					hitables.Add(new Sphere(position, radius,
+											new Metal(new Vector3(0.5f * (1.0f + Util.UnitRandFloat()), 0.5f * (1.0f + Util.UnitRandFloat()), 0.5f * (1.0f + Util.UnitRandFloat())),
+													  0.5f * (1.0f + Util.UnitRandFloat())))) ;
+																		
+					continue;
+				}
+				hitables.Add(new Sphere(position, radius, dielectric));
+			}
+		}
+		radius = 1.0f;
+		position.Set(0.0f, 1.0f, 0.0f);
+		hitables.Add(new Sphere(position, radius, dielectric));
+		position.Set(-4.0f, 1.0f, 0.0f);
+		hitables.Add(new Sphere(position, radius, new Lambertian(new Vector3(0.4f, 0.2f, 0.1f))));
+		position.Set(4.0f, 1.0f, 0.0f);
+		hitables.Add(new Sphere(position, radius, new Metal(new Vector3(0.7f, 0.6f, 0.5f), 0.0f)));
+		hitables_ = hitables.ToArray();
 	}
 	public Vector3 GetColor(Ray ray) {
 		var attenuation = Vector3.one;

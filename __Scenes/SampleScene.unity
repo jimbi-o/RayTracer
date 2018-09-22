@@ -208,7 +208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   quality: 1000
-  rate: 2
+  rate: 1
   maxDepth: 50
 --- !u!20 &534669904
 Camera:

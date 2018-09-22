@@ -8,6 +8,7 @@ public class CameraParam {
 	public float fov;
 	public float aspect;
 	public float fstop;
+	public float focusDistance;
 	public CameraParam() {
 		vup.Set(0.0f, 1.0f, 0.0f);
 		fov = 45.0f;
@@ -20,7 +21,7 @@ public class CameraRay {
 	private Vector3 lowerLeftCorner_;
 	private float lensRadius_;
 	public CameraRay(CameraParam param) {
-		lensRadius_ = 0.5f / param.fstop;
+		lensRadius_ = 0.0005f / param.fstop;
 		var theta = param.fov * Mathf.PI / 180.0f;
 		var halfHeight = Mathf.Tan(theta / 2.0f);
 		var halfWidth = param.aspect * halfHeight;
@@ -28,10 +29,9 @@ public class CameraRay {
 		w_ = (param.lookFrom - param.lookAt).normalized;
 		u_ = Vector3.Cross(param.vup, w_).normalized;
 		v_ = Vector3.Cross(w_, u_);
-		var focusDistance = (param.lookFrom - param.lookAt).magnitude;
-		lowerLeftCorner_ = origin_ - focusDistance * (halfWidth * u_ + halfHeight * v_ + w_);
-		horizontal_ = 2.0f * halfWidth * u_ * focusDistance;
-		vertical_ = 2.0f * halfHeight * v_ * focusDistance;
+		lowerLeftCorner_ = origin_ - param.focusDistance * (halfWidth * u_ + halfHeight * v_ + w_);
+		horizontal_ = 2.0f * halfWidth * u_ * param.focusDistance;
+		vertical_ = 2.0f * halfHeight * v_ * param.focusDistance;
 	}
 	public Ray GetRay(float s, float t) {
 		var rd = lensRadius_ * Util.RandomInUnitSphere();

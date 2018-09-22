@@ -2,13 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 public class Dielectric : MaterialData {
-	public float ReflectionIndex {
-		get { return reflectionIndex_; }
-		set { reflectionIndex_ = value; }
-	}
-	private float reflectionIndex_;
-	public Dielectric(float reflectionIndex) {
-		ReflectionIndex = reflectionIndex;
+	public float reflectionIndex;
+	public Dielectric(float r) {
+		reflectionIndex = r;
 	}
 	public override bool Scatter(Ray ray, HitRecord hit) {
 		hit.attenuation = Vector3.one;
@@ -17,15 +13,15 @@ public class Dielectric : MaterialData {
 	}
 	public Vector3 GetScatteredRay(Ray ray, HitRecord hit) {
 		Vector3 scattered = Vector3.zero;
-		float cosineR = ReflectionIndex;
+		float cosineR = reflectionIndex;
 		if (Vector3.Dot(ray.Direction, hit.normal) > 0.0f) {
-			scattered = Util.GetRefractedRay(ray.Direction, -hit.normal, ReflectionIndex);
+			scattered = Util.GetRefractedRay(ray.Direction, -hit.normal, reflectionIndex);
 		} else {
-			scattered = Util.GetRefractedRay(ray.Direction, hit.normal, 1.0f / ReflectionIndex);
+			scattered = Util.GetRefractedRay(ray.Direction, hit.normal, 1.0f / reflectionIndex);
 			cosineR =-1.0f;
 		}
 		if (scattered != Vector3.zero) {
-			float schlick = Util.GetSchlick(cosineR * Vector3.Dot(ray.Direction, hit.normal), ReflectionIndex);
+			float schlick = Util.GetSchlick(cosineR * Vector3.Dot(ray.Direction, hit.normal), reflectionIndex);
 			if (schlick <= Util.UnitRandFloat()) {
 				return scattered;
 			}

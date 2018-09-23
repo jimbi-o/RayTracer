@@ -8,7 +8,7 @@ public class Dielectric : MaterialData {
 	}
 	public override bool Scatter(Ray ray, HitRecord hit) {
 		hit.attenuation = Vector3.one;
-		hit.scatteredRay = new Ray(hit.p, GetScatteredRay(ray, hit));
+		hit.scatteredRay = new Ray(hit.p, GetScatteredRay(ray, hit), ray.Time);
 		return true;
 	}
 	public Vector3 GetScatteredRay(Ray ray, HitRecord hit) {

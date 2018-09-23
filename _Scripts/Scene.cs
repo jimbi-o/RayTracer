@@ -20,7 +20,8 @@ public class Scene {
 				if ((position - center).sqrMagnitude <= 0.81) continue;
 				var chooseMat = Util.UnitRandFloat();
 				if (chooseMat < 0.8f) {
-					hitables.Add(new Sphere(position, radius, new Lambertian(new Vector3(Util.UnitRandFloat(), Util.UnitRandFloat(), Util.UnitRandFloat()))));
+					// hitables.Add(new Sphere(position, radius, new Lambertian(new Vector3(Util.UnitRandFloat(), Util.UnitRandFloat(), Util.UnitRandFloat()))));
+					hitables.Add(new MovingSphere(position, position + new Vector3(0.0f, 0.5f * Util.UnitRandFloat(), 0.0f), 0.0f, 1.0f, radius, new Lambertian(new Vector3(Util.UnitRandFloat(), Util.UnitRandFloat(), Util.UnitRandFloat()))));
 					continue;
 				}
 				if (chooseMat < 0.95f) {

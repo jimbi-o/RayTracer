@@ -9,7 +9,7 @@ public class Metal : MaterialData {
 		fuzz = f;
 	}
 	public override bool Scatter(Ray ray, HitRecord hit) {
-		hit.scatteredRay = new Ray(hit.p, Vector3.Reflect(ray.Direction, hit.normal) + fuzz * Util.RandomInUnitSphere());
+		hit.scatteredRay = new Ray(hit.p, Vector3.Reflect(ray.Direction, hit.normal) + fuzz * Util.RandomInUnitSphere(), ray.Time);
 		hit.attenuation = albedo;
 		return Vector3.Dot(hit.scatteredRay.Direction, hit.normal) > 0.0f;
 	}

@@ -15,6 +15,7 @@ public class RayTracer : MonoBehaviour {
 		height_ = Screen.height / rate;
 		material_ = new Material(Shader.Find("Hidden/RayTracer"));
 		tex_ = new Texture2D(width_, height_, TextureFormat.ARGB32, false, true);
+		tex_.wrapMode = TextureWrapMode.Clamp;
 		scene_ = new Scene(maxDepth);
 		rayTracingEngine_ = new RayTracingEngine(quality, width_, height_);
 	}

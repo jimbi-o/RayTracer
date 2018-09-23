@@ -7,7 +7,7 @@ public class Lambertian : MaterialData {
 		albedo = a;
 	}
 	public override bool Scatter(Ray ray, HitRecord hit) {
-		hit.scatteredRay = new Ray(hit.p, hit.normal + Util.RandomInUnitSphere());
+		hit.scatteredRay = new Ray(hit.p, hit.normal + Util.RandomInUnitSphere(), ray.Time);
 		hit.attenuation = albedo;
 		return true;
 	}

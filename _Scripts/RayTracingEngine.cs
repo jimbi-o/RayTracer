@@ -22,6 +22,7 @@ public class RayTracingEngine {
 		cameraParam.fstop = 4.0f;
 		cameraParam.focusDistance = 10.0f;
 		cameraParam.fov = 20.0f;
+		cameraParam.t1 = 1.0f;
 		cameraRay_ = new CameraRay(cameraParam);
 		pixel_ = new Color[width_, height_];
 		for (int y = height_ - 1; y >= 0; --y) {

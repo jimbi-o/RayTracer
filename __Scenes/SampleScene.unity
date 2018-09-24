@@ -209,7 +209,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quality: 10000
   rate: 4
-  maxDepth: 5
+  maxDepth: 3
 --- !u!20 &534669904
 Camera:
   m_ObjectHideFlags: 0

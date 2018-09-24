@@ -28,4 +28,10 @@ public static class Util {
 		r0 = r0 * r0;
 		return r0 + (1.0f - r0) * Mathf.Pow(1.0f - cosine, 5.0f);
 	}
+	public static void Swap<T>(ref T lhs, ref T rhs) {
+		T temp;
+		temp = lhs;
+		lhs = rhs;
+		rhs = temp;
+	}
 }

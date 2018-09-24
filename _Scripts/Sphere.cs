@@ -24,24 +24,23 @@ public class Sphere : Hitable {
 	public virtual Vector3 Center(float time) {
 		return center_;
 	}
-	public override HitRecord Hit(Ray ray, HitRecord hit) {
+	public override void Hit(Ray ray, HitRecord hit) {
 		Vector3 oc = ray.Origin - Center(ray.Time);
 		float a = Vector3.Dot(ray.Direction, ray.Direction);
 		float b = Vector3.Dot(oc, ray.Direction);
 		float c = Vector3.Dot(oc, oc) - radius_ * radius_;
 		float discriminant = b * b - a * c;
-		if (discriminant <= 0.0f) return hit;
+		if (discriminant <= 0.0f) return;
 		discriminant = Mathf.Sqrt(discriminant);
 		float t = (-b - discriminant) / a;
 		if (hit.SetT(t)) {
 			SetHitRecordVal(ray, t, hit);
-			return hit;
+			return;
 		}
 		t = (-b + discriminant) / a;
 		if (hit.SetT(t)) {
 			SetHitRecordVal(ray, t, hit);
 		}
-		return hit;
 	}
 	void SetHitRecordVal(Ray ray, float t, HitRecord hit) {
 		hit.t = t;

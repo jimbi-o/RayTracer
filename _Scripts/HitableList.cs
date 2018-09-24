@@ -4,6 +4,9 @@ using UnityEngine;
 public class HitableList : Hitable {
 	private Hitable[] hitables_;
 	public HitableList() {
+		hitables_ = OneWeekScene();
+	}
+	private Hitable[] OneWeekScene() {
 		var center = new Vector3(4.0f, 2.0f, 0.0f);
 		var position = new Vector3(0.0f, -1000.0f, 0.0f);
 		var hitables = new List<Hitable>(500);
@@ -37,16 +40,23 @@ public class HitableList : Hitable {
 		hitables.Add(new Sphere(position, radius, new Lambertian(new Vector3(0.4f, 0.2f, 0.1f))));
 		position.Set(4.0f, 1.0f, 0.0f);
 		hitables.Add(new Sphere(position, radius, new Metal(new Vector3(0.7f, 0.6f, 0.5f), 0.0f)));
-		hitables_ = hitables.ToArray();
+		var retval = new Hitable[1];
+		retval[0] = new BvhNode(hitables.ToArray(), 0, hitables.Count, 0.0f, 1.0f);
+		return retval;
 	}
-	public override HitRecord Hit(Ray ray, HitRecord hit) {
+	public override void Hit(Ray ray, HitRecord hit) {
 		foreach (var hitable in hitables_) {
 			hitable.Hit(ray, hit);
 		}
-		return hit;
 	}
 	public override Boundary BoundingBox(float t0, float t1) {
-		// TODO
-		return new Boundary();
+		var retval = hitables_[0].BoundingBox(t0, t1);
+		if (!retval.IsValid()) return null;
+		for (int i = 1; i < hitables_.Length; ++i) {
+			var tmp = hitables_[i].BoundingBox(t0, t1);
+			if (! tmp.IsValid()) return null;
+			retval = Boundary.SurroundingBoundary(tmp, retval);
+		}
+		return retval;	
 	}
 }

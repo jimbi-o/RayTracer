@@ -13,7 +13,8 @@ public class Scene {
 	public Vector3 GetColor(Ray ray) {
 		var attenuation = Vector3.one;
 		for (int i = 0; i < maxDepth_; ++i) {
-			var hit = hitableList_.Hit(ray, new HitRecord());
+			var hit = new HitRecord();
+			hitableList_.Hit(ray, hit);
 			if (!hit.IsHit()) {
 				attenuation.Scale(GetBGColor(ray));
 				break;
